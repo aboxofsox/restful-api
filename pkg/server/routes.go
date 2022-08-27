@@ -11,6 +11,7 @@ import (
 	"rest/pkg/auth"
 )
 
+// Ok is a simple GET test route
 func Ok(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -25,6 +26,7 @@ func Ok(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// NewAccount creates a new account.Account given form data
 func NewAccount(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
@@ -49,6 +51,7 @@ func NewAccount(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+// Login handles user authentication
 func Login(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
@@ -91,6 +94,7 @@ func Login(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+// GetAllAccounts sends every account in the database as JSON
 func GetAllAccounts(db *sql.DB) http.HandlerFunc {
 	var acc account.Account
 	accounts := make([]account.Account, 10)

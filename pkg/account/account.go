@@ -12,6 +12,7 @@ type Account struct {
 	Password string `json:"password,omitempty"`
 }
 
+// New creates a new Account
 func New(username, password string) *Account {
 	return &Account{
 		Username: username,
@@ -19,6 +20,7 @@ func New(username, password string) *Account {
 	}
 }
 
+// Save saves an Account
 func (acc *Account) Save(db *sql.DB) error {
 	es := fmt.Sprintf("insert into accounts (username, password) values ('%s', '%s');", acc.Username, acc.Password)
 

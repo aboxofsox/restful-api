@@ -9,6 +9,8 @@ import (
 	"os"
 )
 
+// Server is our server instance.
+// It contains everything our server will need.
 type Server struct {
 	port   string
 	mux    *http.ServeMux
@@ -16,6 +18,7 @@ type Server struct {
 	db     *sql.DB
 }
 
+// New creates a new Server instance
 func New(port int) *Server {
 	return &Server{
 		port:   fmt.Sprintf(":%d", port),
@@ -24,6 +27,7 @@ func New(port int) *Server {
 	}
 }
 
+// ConnectDB connects the server instance to a database
 func (s *Server) ConnectDB(driver, dbUrl string) error {
 	db, err := sql.Open(driver, dbUrl)
 	if err != nil {
@@ -37,6 +41,7 @@ func (s *Server) ConnectDB(driver, dbUrl string) error {
 	return nil
 }
 
+// DB returns the database instance since it's not an exported property
 func (s *Server) DB() *sql.DB { return s.db }
 
 func (s *Server) AddRoute(pattern string, handler http.HandlerFunc) {
@@ -47,6 +52,7 @@ func (s *Server) AddRoute(pattern string, handler http.HandlerFunc) {
 	s.routes[pattern] = handler
 }
 
+// Static defines a static file server for static content
 func (s *Server) Static(pattern, root string) {
 	if _, exists := s.routes[pattern]; exists {
 		fmt.Printf("server: route pattern exists: %s\n", pattern)
@@ -60,6 +66,7 @@ func (s *Server) Static(pattern, root string) {
 	http.Handle(pattern, fs)
 }
 
+// Start starts the server
 func (s *Server) Start() error {
 	if len(s.routes) != 0 {
 		for p, fn := range s.routes {
