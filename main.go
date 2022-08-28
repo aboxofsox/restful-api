@@ -5,7 +5,7 @@ import (
 	"rest/pkg/server"
 )
 
-const DBConnection string = "postgres://postgres:postgrespw@localhost:49153?sqlmode=disable"
+const DBConnection string = ""
 
 func main() {
 	s := server.New(3000)

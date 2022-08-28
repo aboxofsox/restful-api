@@ -86,6 +86,7 @@ func Login(db *sql.DB) http.HandlerFunc {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
+
 		} else {
 			http.Error(w, "not authenticated", http.StatusForbidden)
 			return
